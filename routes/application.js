@@ -4,6 +4,6 @@ const verifyToken = require("../middlewares/verfiedToken");
 const applicationControll = require("../controllers/application.control");
 
 router.post("/login", applicationControll.Login);
-router.get("/get-data", applicationControll.getData);
+router.get("/get-data",verifyToken ,applicationControll.getData);
 
 module.exports = router;
