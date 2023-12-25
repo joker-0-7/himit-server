@@ -8,14 +8,14 @@ const Login = async (req, res) => {
   if (user.password !== password)
     return res.status(404).json({ msg: "الباسورد غلط" });
   const id = user._id;
-  const token = jwt.sign({ num, id }, process.env.SECRET_TOKEN, {
-    expiresIn: "1m",
-  });
+  const token = jwt.sign({ num, id }, process.env.SECRET_TOKEN);
   user.password = undefined;
   return res.status(200).json({ user, token });
 };
-const getData = (req, res) => {
-  return res.status(200).json({ msg: "done" });
+const getData = async (req, res) => {
+  const id = req.current;
+  const user = await Student.findById(id);
+  return res.status(200).json({ msg: "done", user });
 };
 module.exports = {
   Login,
