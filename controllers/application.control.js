@@ -1,6 +1,7 @@
 const Student = require("../models/students.model");
 const jwt = require("jsonwebtoken");
 const Login = async (req, res) => {
+  console.log(req.body);
   const { num, password } = req.body;
   const user = await Student.findOne({ num: num });
   if (!user) return res.status(404).send("انت مش موجود");
