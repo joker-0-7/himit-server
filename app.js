@@ -24,7 +24,9 @@ app.use(
 );
 
 mongoose
-  .connect("mongodb://localhost:27017")
+  .connect(
+    "mongodb+srv://ahmed:Aa010011012@cluster0.ai7xeiu.mongodb.net/?retryWrites=true&w=majority"
+  )
   .then(() => {
     console.log("DONE CONNECT TO DB");
   })
