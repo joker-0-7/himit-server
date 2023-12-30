@@ -4,7 +4,7 @@ const Login = async (req, res) => {
   console.log(req.body);
   const { num, password } = req.body;
   const user = await Student.findOne({ num: num });
-  if (!user) return res.status(404).send("انت مش موجود");
+  if (!user) return res.status(404).json({msg:"انت مش موجود"});
   if (user.password !== password)
     return res.status(404).json({ msg: "الباسورد غلط" });
   const id = user._id;
