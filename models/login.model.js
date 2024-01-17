@@ -9,6 +9,15 @@ const Users = new mongoose.Schema({
     type: String,
     required: true,
   },
+  fristName: {
+    type: String,
+  },
+  lastName: {
+    type: String,
+  },
+  img: {
+    type: String,
+  },
 });
 
 module.exports = mongoose.model("User", Users);

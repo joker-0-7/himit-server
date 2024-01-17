@@ -9,6 +9,7 @@ const cors = require("cors");
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
 var applicationRouter = require("./routes/application");
+var doctorsRouter = require("./routes/doctor");
 const { default: mongoose } = require("mongoose");
 
 var app = express();
@@ -24,9 +25,8 @@ app.use(
 );
 
 mongoose
-  .connect(
-    "mongodb+srv://ahmed:Aa010011012@cluster0.ai7xeiu.mongodb.net/?retryWrites=true&w=majority"
-  )
+  .connect("mongodb://localhost:27017")
+
   .then(() => {
     console.log("DONE CONNECT TO DB");
   })
@@ -37,6 +37,7 @@ mongoose
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
 app.use("/application", applicationRouter);
+app.use("/doctor", doctorsRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
