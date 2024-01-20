@@ -38,7 +38,7 @@ const studentSchema = new mongoose.Schema(
       required: true,
     },
     seatingNumbers: {
-      type: Number,
+      type: Array,
       default: null,
     },
     committeeNumber: {
