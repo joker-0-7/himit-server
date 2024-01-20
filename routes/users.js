@@ -59,4 +59,5 @@ router.post("/exams-table", userControll.examsTable);
 router.put("/goal-application/:id", userControll.GoalApplication);
 router.get("/goal-application", userControll.getContent);
 router.post("/update-password/:id", userControll.updatePassword);
+router.post("/mility-edu", userControll.MilitaryEducation);
 module.exports = router;

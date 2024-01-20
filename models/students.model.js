@@ -42,7 +42,7 @@ const studentSchema = new mongoose.Schema(
       default: null,
     },
     committeeNumber: {
-      type: Number,
+      type: Array,
       default: null,
     },
     markers: [],

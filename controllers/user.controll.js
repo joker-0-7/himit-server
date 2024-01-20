@@ -1,5 +1,6 @@
 const AboutApp = require("../models/aboutApp.model");
 const User = require("../models/login.model");
+const milityEduModel = require("../models/mility-edu.model");
 const scheduleModel = require("../models/schedule.model");
 const Student = require("../models/students.model");
 const jwt = require("jsonwebtoken");
@@ -148,32 +149,53 @@ const updatePassword = async (req, res) => {
   }
 };
 const examsTable = async (req, res) => {
-  console.log(req.body);
-  // const existClassRoom = await scheduleModel.exists({
-  //   classRoom: req.body.classRoom,
-  // });
-  // const existType = await scheduleModel.exists({
-  //   type: req.body.type,
-  // });
-  // if (existType) {
-  //   if (existClassRoom) {
-  //     const existAcademicDivision = await scheduleModel.exists({
-  //       academicDivision: req.body.academicDivision,
-  //     });
-  //     if (existAcademicDivision)
-  //       return res
-  //         .status(400)
-  //         .json({ msg: "الجدول موجود بالفعل يرجي اختيار بيانات اخري" });
-  //   }
-  // }
-  // const data = new scheduleModel(req.body);
-  // try {
-  //   await data.save();
-  //   return res.status(201).json({ msg: "تم اضافة الجدول بنجاح" });
-  // } catch (error) {
-  //   console.log(error);
-  // }
+  const existClassRoom = await scheduleModel.exists({
+    classRoom: req.body.classRoom,
+  });
+  const existType = await scheduleModel.exists({
+    type: req.body.type,
+  });
+  if (existType) {
+    if (existClassRoom) {
+      const existAcademicDivision = await scheduleModel.exists({
+        academicDivision: req.body.academicDivision,
+      });
+      if (existAcademicDivision)
+        return res
+          .status(400)
+          .json({ msg: "الجدول موجود بالفعل يرجي اختيار بيانات اخري" });
+    }
+  }
+  const data = new scheduleModel(req.body);
+  try {
+    await data.save();
+    return res.status(201).json({ msg: "تم اضافة الجدول بنجاح" });
+  } catch (error) {
+    console.log(error);
+  }
 };
+const MilitaryEducation = async (req, res) => {
+  try {
+    await Promise.all(
+      req.body.map(async (s) => {
+        const data = new milityEduModel({
+          section: "",
+          squad: "",
+          startDate: "",
+          endDate: "",
+          studentId: s._id,
+        });
+        await data.save();
+      })
+    );
+
+    return res.status(200).json({ msg: "تم ارسال البيانات بنجاح" });
+  } catch (error) {
+    console.error("Error saving data:", error);
+    return res.status(500).json({ msg: "حدث خطأ أثناء حفظ البيانات" });
+  }
+};
+
 module.exports = {
   Login,
   addNewStudent,
@@ -188,4 +210,5 @@ module.exports = {
   GoalApplication,
   updatePassword,
   examsTable,
+  MilitaryEducation,
 };

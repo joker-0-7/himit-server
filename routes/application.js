@@ -8,4 +8,5 @@ router.get("/get-data", verifyToken, applicationControll.getData);
 router.get("/get-doctors", verifyToken, applicationControll.getDoctors);
 router.get("/get-content", verifyToken, applicationControll.getContent);
 router.get("/schedule", verifyToken, applicationControll.getSchedule);
+router.get("/mility-edu", verifyToken, applicationControll.MilitaryEducation);
 module.exports = router;

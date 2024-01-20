@@ -3,6 +3,7 @@ const Student = require("../models/students.model");
 const Doctor = require("../models/doctor.model");
 const jwt = require("jsonwebtoken");
 const scheduleModel = require("../models/schedule.model");
+const milityEduModel = require("../models/mility-edu.model");
 const Login = async (req, res) => {
   const { num, password } = req.body;
   const user = await Student.findOne({ num: num });
@@ -15,7 +16,6 @@ const Login = async (req, res) => {
   const id = user._id;
   const token = jwt.sign({ num, id }, process.env.SECRET_TOKEN);
   user.password = undefined;
-  user.squad = user.squad ? user.squad.split(" ")[1] : "";
   return res.status(200).json({ user, token });
 };
 const getData = (req, res) => {
@@ -49,10 +49,21 @@ const getSchedule = async (req, res) => {
     return res.status(400).json({ msg: "حدث خطأ ما برجاء المحاولة مرة اخري" });
   }
 };
+const MilitaryEducation = async (req, res) => {
+  const id = req.current;
+  try {
+    const data = await milityEduModel.findOne({ studentId: id });
+    return res.status(200).json(data);
+  } catch (error) {
+    console.log(error);
+    return res.status(400).json({ msg: "حدث خطأ ما برجاء المحاولة مرة اخري" });
+  }
+};
 module.exports = {
   Login,
   getData,
   getDoctors,
   getContent,
   getSchedule,
+  MilitaryEducation,
 };
