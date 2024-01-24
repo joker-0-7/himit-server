@@ -53,10 +53,12 @@ const MilitaryEducation = async (req, res) => {
   const id = req.current;
   try {
     const data = await milityEduModel.findOne({ studentId: id });
+    if (!data) res.states(404).json(null)
     return res.status(200).json(data);
   } catch (error) {
     console.log(error);
     return res.status(400).json({ msg: "حدث خطأ ما برجاء المحاولة مرة اخري" });
+    
   }
 };
 module.exports = {
