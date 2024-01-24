@@ -53,7 +53,7 @@ const MilitaryEducation = async (req, res) => {
   const id = req.current;
   try {
     const data = await milityEduModel.findOne({ studentId: id });
-    if (!data) return res.states(404).json(null)
+    if (!data) return res.status(404).json(null)
     return res.status(200).json(data);
   } catch (error) {
     console.log(error);
