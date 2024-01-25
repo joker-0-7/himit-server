@@ -6,11 +6,11 @@ const getDoctors = async (req, res) => {
 };
 const addDoctor = async (req, res) => {
   let { fristName, lastName, img } = req.body;
-  img = `https://server-hmit.onrender.com/out${req.uniqueSuffix}`;
+  img = `https://server-hmit.onrender.com/out/${req.uniqueSuffix}`;
   const doctor = new Doctor({ fristName, lastName, image: img });
   try {
     await doctor.save();
-    return res.json({ msg: "تم اضافة البيانات بنجاح" });
+    return res.json({ msg: "تم اضافة البيانات بنجاح",  doctor});
   } catch (error) {
     console.log(error);
     return res.status(400).json({ msg: "حدث خطأ ما برجاء المحاولة مرة اخري" });
