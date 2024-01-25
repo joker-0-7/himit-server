@@ -23,6 +23,8 @@ app.use(
   "/public/images",
   express.static(path.join(__dirname, "public/images"))
 );
+app.use("/out", express.static(path.join(__dirname, "out")));
+
 
 mongoose
   .connect(
