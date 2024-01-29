@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+
 const scheduleSchema = new mongoose.Schema({
   type: {
     type: String,
@@ -14,4 +15,5 @@ const scheduleSchema = new mongoose.Schema({
   },
   days: [],
 });
+
 module.exports = mongoose.model("Schedule", scheduleSchema);

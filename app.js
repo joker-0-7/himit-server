@@ -25,7 +25,6 @@ app.use(
 );
 app.use("/out", express.static(path.join(__dirname, "out")));
 
-
 mongoose
   .connect(
     "mongodb+srv://ahmed:Aa010011012@cluster0.ai7xeiu.mongodb.net/?retryWrites=true&w=majority"

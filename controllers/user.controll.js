@@ -86,6 +86,7 @@ const updateData = async (req, res) => {
   }
 };
 const classSchedules = async (req, res) => {
+  console.log(req.body);
   const existClassRoom = await scheduleModel.exists({
     classRoom: req.body.classRoom,
   });
@@ -195,7 +196,15 @@ const MilitaryEducation = async (req, res) => {
     return res.status(500).json({ msg: "حدث خطأ أثناء حفظ البيانات" });
   }
 };
-
+const getClassSchedules = async (req, res) => {
+  try {
+    const schedule = await scheduleModel.find();
+    return res.status(200).json(schedule);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ msg: "حدث خطأ أثناء حفظ البيانات" });
+  }
+};
 module.exports = {
   Login,
   addNewStudent,
@@ -211,4 +220,5 @@ module.exports = {
   updatePassword,
   examsTable,
   MilitaryEducation,
+  getClassSchedules,
 };

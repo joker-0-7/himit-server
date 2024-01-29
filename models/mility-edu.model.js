@@ -3,11 +3,11 @@ const mongoose = require("mongoose");
 const MilitaryEducationSchema = new mongoose.Schema({
   section: {
     type: String,
-    // required: true,
+    required: true,
   },
   squad: {
     type: String,
-    // required: true,
+    required: true,
   },
   startDate: {
     type: String,
@@ -18,10 +18,6 @@ const MilitaryEducationSchema = new mongoose.Schema({
   studentId: {
     type: String,
     unique: true,
-  },
-  num: {
-    type: Array,
-    default: null
   },
 });
 module.exports = mongoose.model("MilitaryEdu", MilitaryEducationSchema);

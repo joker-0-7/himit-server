@@ -43,7 +43,8 @@ const getSchedule = async (req, res) => {
         String(sch.academicDivision) === String(current.section)
       );
     });
-    return res.status(200).json(currentSchedule);
+    console.log(currentSchedule);
+    return res.status(200).json(currentSchedule[0]);
   } catch (err) {
     console.log(err);
     return res.status(400).json({ msg: "حدث خطأ ما برجاء المحاولة مرة اخري" });
@@ -53,12 +54,10 @@ const MilitaryEducation = async (req, res) => {
   const id = req.current;
   try {
     const data = await milityEduModel.findOne({ studentId: id });
-    if (!data) return res.status(404).json(null)
     return res.status(200).json(data);
   } catch (error) {
     console.log(error);
     return res.status(400).json({ msg: "حدث خطأ ما برجاء المحاولة مرة اخري" });
-    
   }
 };
 module.exports = {

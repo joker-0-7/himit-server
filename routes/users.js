@@ -55,6 +55,7 @@ router.get("/get-student/:id", userControll.getStudent);
 router.delete("/delete-student/:id", userControll.deleteStudent);
 router.put("/add-seating-numbers", userControll.addSeatingNumbers);
 router.post("/class-schedules", userControll.classSchedules);
+router.get("/class-schedules", userControll.getClassSchedules);
 router.post("/exams-table", userControll.examsTable);
 router.put("/goal-application/:id", userControll.GoalApplication);
 router.get("/goal-application", userControll.getContent);
