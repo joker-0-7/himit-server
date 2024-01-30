@@ -19,5 +19,8 @@ const MilitaryEducationSchema = new mongoose.Schema({
     type: String,
     unique: true,
   },
+  num: {
+    type: String,
+  },
 });
 module.exports = mongoose.model("MilitaryEdu", MilitaryEducationSchema);

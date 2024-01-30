@@ -25,6 +25,15 @@ app.use(
 );
 app.use("/out", express.static(path.join(__dirname, "out")));
 
+// mongoose
+//   .connect("mongodb://localhost:27017")
+
+//   .then(() => {
+//     console.log("DONE CONNECT TO DB");
+//   })
+//   .catch((err) => {
+//     console.log(err);
+//   });
 mongoose
   .connect(
     "mongodb+srv://ahmed:Aa010011012@cluster0.ai7xeiu.mongodb.net/?retryWrites=true&w=majority"
