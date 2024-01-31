@@ -20,7 +20,7 @@ const MilitaryEducationSchema = new mongoose.Schema({
     unique: true,
   },
   num: {
-    type: String,
+    type: Array,
   },
 });
 module.exports = mongoose.model("MilitaryEdu", MilitaryEducationSchema);
