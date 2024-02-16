@@ -38,14 +38,15 @@ const studentSchema = new mongoose.Schema(
       required: true,
     },
     seatingNumbers: {
-      type: Array,
+      type: String,
       default: null,
     },
     committeeNumber: {
-      type: Array,
+      type: String,
       default: null,
     },
     markers: [],
+    backwards: [],
   },
   { timestamps: true }
 );

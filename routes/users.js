@@ -61,4 +61,5 @@ router.put("/goal-application/:id", userControll.GoalApplication);
 router.get("/goal-application", userControll.getContent);
 router.post("/update-password/:id", userControll.updatePassword);
 router.post("/mility-edu", userControll.MilitaryEducation);
+router.post("/add-cumulative", userControll.addCumulative);
 module.exports = router;

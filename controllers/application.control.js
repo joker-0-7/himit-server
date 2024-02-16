@@ -5,15 +5,20 @@ const jwt = require("jsonwebtoken");
 const scheduleModel = require("../models/schedule.model");
 const milityEduModel = require("../models/mility-edu.model");
 const examsTableModel = require("../models/exams-table.model");
+const {
+  EXAM_TABLE,
+  USER_NOT_FOUND,
+  WROMG_PASSWORD,
+  SECTION_NOT_FOUND,
+  CURRENT_SECTION_NOT_FOUND,
+} = require("../constants/msg");
+const cumulativeModel = require("../models/cumulative.model");
 const Login = async (req, res) => {
   const { num, password } = req.body;
   const user = await Student.findOne({ num: num });
-  if (!user)
-    return res
-      .status(404)
-      .json({ msg: "رقمك القومي غير مسجل في قواعد البيانات لدينا !" });
+  if (!user) return res.status(404).json({ msg: USER_NOT_FOUND });
   if (user.password !== password)
-    return res.status(404).json({ msg: "Wrong Password" });
+    return res.status(404).json({ msg: WROMG_PASSWORD });
   const id = user._id;
   const token = jwt.sign({ num, id }, process.env.SECRET_TOKEN);
   user.password = undefined;
@@ -35,10 +40,9 @@ const getSchedule = async (req, res) => {
   try {
     const id = req.current;
     const current = await Student.findById(id);
-    if (!current) return res.status(404).json({ msg: "الطالب غير سجل" });
     const schedule = await scheduleModel.find().lean();
     if (schedule.length == 0)
-      return res.status(404).json({ msg: "لا يوجد جداول حتي الان" });
+      return res.status(404).json({ msg: SECTION_NOT_FOUND });
     const currentSchedule = schedule.filter((sch) => {
       return (
         String(sch.classRoom) === String(current.squad) &&
@@ -49,21 +53,20 @@ const getSchedule = async (req, res) => {
     if (currentSchedule.length !== 0) {
       return res.status(200).json(currentSchedule[0]);
     } else {
-      return res.status(404).json({ msg: "لا يوجد جدول لهذا القسم" });
+      return res.status(404).json({ msg: CURRENT_SECTION_NOT_FOUND });
     }
   } catch (err) {
     console.log(err);
-    return res.status(400).json({ msg: "حدث خطأ ما برجاء المحاولة مرة اخري" });
+    return res.status(400).json({ msg: SECTION_NOT_FOUND });
   }
 };
 const getScheduleSection = async (req, res) => {
   try {
     const id = req.current;
     const current = await Student.findById(id);
-    if (!current) return res.status(404).json({ msg: "الطالب غير سجل" });
     const schedule = await scheduleModel.find().lean();
     if (schedule.length == 0)
-      return res.status(404).json({ msg: "لا يوجد جداول حتي الان" });
+      return res.status(404).json({ msg: CURRENT_SECTION_NOT_FOUND });
     const currentSchedule = schedule.filter((sch) => {
       return (
         String(sch.classRoom) === String(current.squad) &&
@@ -74,11 +77,11 @@ const getScheduleSection = async (req, res) => {
     if (currentSchedule.length !== 0) {
       return res.status(200).json(currentSchedule[0]);
     } else {
-      return res.status(404).json({ msg: "لا يوجد جدول لهذا القسم" });
+      return res.status(404).json({ msg: CURRENT_SECTION_NOT_FOUND });
     }
   } catch (err) {
     console.log(err);
-    return res.status(400).json({ msg: "حدث خطأ ما برجاء المحاولة مرة اخري" });
+    return res.status(400).json({ msg: ERROR_MESSAGE });
   }
 };
 const MilitaryEducation = async (req, res) => {
@@ -88,23 +91,29 @@ const MilitaryEducation = async (req, res) => {
     return res.status(200).json(data);
   } catch (error) {
     console.log(error);
-    return res.status(400).json({ msg: "حدث خطأ ما برجاء المحاولة مرة اخري" });
+    return res.status(400).json({ msg: ERROR_MESSAGE });
   }
 };
 const examTable = async (req, res) => {
   const student = req.current;
   const data = await examsTableModel.find();
-  if (data.length == 0)
-    return res.status(404).json({ msg: "لم يتم اضافة جداول حتي الأن" });
+  if (data.length == 0) return res.status(404).json({ msg: EXAM_TABLE });
   const currentData = data.filter((data) => {
     return (
       String(student.section) === String(data.academicDivision) &&
       String(student.squad) === String(data.classRoom)
     );
   });
-  if (currentData.length == 0)
-    return res.status(404).json({ msg: "لا يوجد جدول لهذا القسم" });
+  if (currentData.length == 0) return res.status(404).json({ msg: EXAM_TABLE });
   return res.status(200).json(currentData[0]);
+};
+const addCumulative = async (req, res) => {
+  let currentUser = req.current;
+  const data = await cumulativeModel.findById("65ccc209dad0ad14d494da15");
+  const userData = data.user;
+  const currentData = userData[currentUser];
+  console.log(currentData);
+  return res.status(201).json(currentData);
 };
 module.exports = {
   Login,
@@ -115,4 +124,5 @@ module.exports = {
   MilitaryEducation,
   getScheduleSection,
   examTable,
+  addCumulative,
 };

@@ -15,4 +15,5 @@ router.get(
 );
 router.get("/mility-edu", verifyToken, applicationControll.MilitaryEducation);
 router.get("/exam-table", verifyToken, applicationControll.examTable);
+router.get("/cumulative", verifyToken, applicationControll.addCumulative);
 module.exports = router;

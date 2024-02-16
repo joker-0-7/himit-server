@@ -1,4 +1,5 @@
 const AboutApp = require("../models/aboutApp.model");
+const cumulativeModel = require("../models/cumulative.model");
 const User = require("../models/login.model");
 const milityEduModel = require("../models/mility-edu.model");
 const scheduleModel = require("../models/schedule.model");
@@ -202,6 +203,17 @@ const getClassSchedules = async (req, res) => {
     return res.status(200).json(schedule);
   } catch (error) {
     console.log(error);
+    return res.status(500);
+  }
+};
+const addCumulative = async (req, res) => {
+  const data = req.body;
+  console.log(data);
+  const newData = cumulativeModel({ user: data });
+  try {
+    newData.save();
+  } catch (error) {
+    console.log(error);
     return res.status(500).json({ msg: "حدث خطأ أثناء حفظ البيانات" });
   }
 };
@@ -221,4 +233,5 @@ module.exports = {
   examsTable,
   MilitaryEducation,
   getClassSchedules,
+  addCumulative,
 };
