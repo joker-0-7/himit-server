@@ -13,6 +13,7 @@ var doctorsRouter = require("./routes/doctor");
 const { default: mongoose } = require("mongoose");
 
 var app = express();
+
 app.use(cors());
 app.use(logger("dev"));
 app.use(express.json());
@@ -34,6 +35,11 @@ app.use("/out", express.static(path.join(__dirname, "out")));
 //   .catch((err) => {
 //     console.log(err);
 //   });
+
+// io.on("connection", (socket) => {
+//   console.log("a user connected");
+// });
+
 mongoose
   .connect(
     "mongodb+srv://ahmed:Aa010011012@cluster0.ai7xeiu.mongodb.net/?retryWrites=true&w=majority"
