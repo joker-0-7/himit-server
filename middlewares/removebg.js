@@ -6,7 +6,7 @@ const removeBg = async (req, res, next) => {
 
   await removeBackgroundFromImageFile({
     path: localFile,
-    apiKey: "E5GaPfcJjkXSXWsNCrwoW6EY",
+    apiKey: "VM1Xn4BZkdvHteJJ6P9hfxvw",
     size: "regular",
     type: "auto",
     scale: "50%",
