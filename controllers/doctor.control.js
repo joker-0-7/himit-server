@@ -6,7 +6,7 @@ const getDoctors = async (req, res) => {
 };
 const addDoctor = async (req, res) => {
   let { fristName, lastName, img } = req.body;
-  img = `https://server-hmit.onrender.com/out${req.uniqueSuffix}`;
+  img = `https://server-hmit.onrender.com/out/${req.uniqueSuffix}`;
   const doctor = new Doctor({ fristName, lastName, image: img });
   try {
     await doctor.save();
