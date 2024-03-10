@@ -24,6 +24,27 @@ var server = http.createServer(app);
 /**
  * Listen on provided port, on all network interfaces.
  */
+const io = require("socket.io")(server, {
+  cors: {
+    origin: "http://localhost:3000",
+    methods: ["GET", "POST"],
+    allowedHeaders: ["Content-type"],
+  },
+});
+io.on("connection", (socket) => {
+  console.log(`Socket ${socket.id} connected.`);
+
+  // Listen for incoming messages and broadcast to all clients
+  socket.on("message", (message) => {
+    io.broadcast.emit("message", message);
+    console.log(message);
+  });
+
+  // Clean up the socket on disconnect
+  socket.on("disconnect", () => {
+    console.log(`Socket ${socket.id} disconnected.`);
+  });
+});
 
 server.listen(port);
 server.on("error", onError);
