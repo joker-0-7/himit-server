@@ -1,3 +1,4 @@
+const { ERROR_MESSAGE } = require("../constants/msg");
 const AboutApp = require("../models/aboutApp.model");
 const cumulativeModel = require("../models/cumulative.model");
 const User = require("../models/login.model");
@@ -217,6 +218,16 @@ const addCumulative = async (req, res) => {
     return res.status(500).json({ msg: "حدث خطأ أثناء حفظ البيانات" });
   }
 };
+const deleteSchedules = async (req, res) => {
+  const id = req.params.id;
+  try {
+    const schedule = await scheduleModel.findByIdAndDelete(id);
+    return res.status(200).json({ msg: "تم الحذف بنجاح" });
+  } catch (error) {
+    console.log(error);
+    return res.status(404).json({ msg: ERROR_MESSAGE });
+  }
+};
 module.exports = {
   Login,
   addNewStudent,
@@ -234,4 +245,5 @@ module.exports = {
   MilitaryEducation,
   getClassSchedules,
   addCumulative,
+  deleteSchedules,
 };
