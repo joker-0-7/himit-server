@@ -53,6 +53,7 @@ router.put(
 );
 router.get("/get-student/:id", userControll.getStudent);
 router.delete("/delete-student/:id", userControll.deleteStudent);
+router.delete("/delete-class-schedules/:id", userControll.deleteSchedules);
 router.put("/add-seating-numbers", userControll.addSeatingNumbers);
 router.post("/class-schedules", userControll.classSchedules);
 router.get("/class-schedules", userControll.getClassSchedules);
