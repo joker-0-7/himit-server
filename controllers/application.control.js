@@ -28,8 +28,8 @@ const Login = async (req, res) => {
   let committeeNumber = String(user.committeeNumber)
   user.seatingNumbers = seatingNumbers.split('');
   user.committeeNumber = committeeNumber.split('');
-  console.log(user.committeeNumber.split(''))
-  console.log(user.committeeNumber.split(''))
+  console.log(user.seatingNumbers)
+  console.log(committeeNumber.split(''))
   return res.status(200).json({ user, token });
 };
 const getData = (req, res) => {
