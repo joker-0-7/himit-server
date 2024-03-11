@@ -38,11 +38,11 @@ const studentSchema = new mongoose.Schema(
       required: true,
     },
     seatingNumbers: {
-      type: String,
+      type: Number,
       default: null,
     },
     committeeNumber: {
-      type: String,
+      type: Number,
       default: null,
     },
     markers: [],
