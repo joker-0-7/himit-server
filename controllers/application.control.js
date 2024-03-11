@@ -28,6 +28,7 @@ const Login = async (req, res) => {
   user.seatingNumbers = [...seatingNumbers]
   user.committeeNumber = [...committeeNumber]
   console.log(user.committeeNumber)
+  console.log(typeof(user.committeeNumber))
   return res.status(200).json({ user, token });
 };
 const getData = (req, res) => {
