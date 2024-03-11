@@ -176,6 +176,7 @@ const examsTable = async (req, res) => {
   } catch (error) {
     console.log(error);
   }
+  console.log(req.body);
 };
 const MilitaryEducation = async (req, res) => {
   try {
@@ -228,6 +229,34 @@ const deleteSchedules = async (req, res) => {
     return res.status(404).json({ msg: ERROR_MESSAGE });
   }
 };
+const addCommitte = async (req, res) => {
+  const data = req.body;
+  const addNum = async (student) => {
+    await Student.findByIdAndUpdate(student._id, student);
+  };
+  data.map((student) => addNum(student));
+};
+const getSchedule = async (req, res) => {
+  const id = req.params.id;
+  const schedule = await scheduleModel.findById(id);
+  if (!schedule) return res.status(404).json("لا يوجد بيانات");
+  return res.status(200).json(schedule);
+};
+const editSchedule = async (req, res) => {
+  let data = req.body;
+  const id = req.params.id;
+  try {
+    const schedule = await scheduleModel.findByIdAndUpdate(
+      id,
+      { data },
+      { new: true }
+    );
+    return res.status(201).json({ schedule, msg: "تم التغيير بنجاح" });
+  } catch (error) {
+    console.log(error);
+    return res.status(404).json(ERROR_MESSAGE);
+  }
+};
 module.exports = {
   Login,
   addNewStudent,
@@ -246,4 +275,7 @@ module.exports = {
   getClassSchedules,
   addCumulative,
   deleteSchedules,
+  addCommitte,
+  getSchedule,
+  editSchedule,
 };
