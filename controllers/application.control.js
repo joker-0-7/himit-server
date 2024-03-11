@@ -23,6 +23,7 @@ const Login = async (req, res) => {
   const token = jwt.sign({ num, id }, process.env.SECRET_TOKEN);
   user.password = undefined;
   user.squad = user.squad.split(" ")[1];
+  user.seatingNumbers = user.seatingNumbers.split(' ')
   return res.status(200).json({ user, token });
 };
 const getData = (req, res) => {
