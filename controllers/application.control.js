@@ -23,11 +23,12 @@ const Login = async (req, res) => {
   const token = jwt.sign({ num, id }, process.env.SECRET_TOKEN);
   user.password = undefined;
   user.squad = user.squad.split(" ")[1];
-
   let seatingNumbers = String(user.seatingNumbers)
   let committeeNumber = String(user.committeeNumber)
-  user.seatingNumbers = seatingNumbers.split('');
-  user.committeeNumber = committeeNumber.split('');
+  let arrSeatingNumbers = seatingNumbers.split('');
+  let arrCommitteeNumbers = committeeNumber.split('');
+  user.seatingNumbers = arrSeatingNumbers;
+  user.committeeNumber = arrCommitteeNumbers;
   console.log(user.seatingNumbers)
   console.log(committeeNumber.split(''))
   return res.status(200).json({ user, token });
