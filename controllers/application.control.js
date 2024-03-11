@@ -25,10 +25,10 @@ const Login = async (req, res) => {
   user.squad = user.squad.split(" ")[1];
   console.log(typeof(user.committeeNumber))
   console.log(user.committeeNumber)
-  let seatingNumbers = String(user.seatingNumbers).split('')
-  let committeeNumber = String(user.committeeNumber).split('')
-  user.seatingNumbers = seatingNumbers
-  user.committeeNumber = committeeNumber
+  let seatingNumbers = String(user.seatingNumbers)
+  let committeeNumber = String(user.committeeNumber)
+  user.seatingNumbers = seatingNumbers.split('');
+  user.committeeNumber = committeeNumber.split('');
   return res.status(200).json({ user, token });
 };
 const getData = (req, res) => {
