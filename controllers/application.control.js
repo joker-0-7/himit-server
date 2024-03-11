@@ -24,7 +24,7 @@ const Login = async (req, res) => {
   user.password = undefined;
   user.squad = user.squad.split(" ")[1];
   const seatingNumbers =  user.seatingNumbers.split('')
-  user.seatingNumbers = seatingNumbers
+  user.seatingNumbers = [...seatingNumbers]
   return res.status(200).json({ user, token });
 };
 const getData = (req, res) => {
