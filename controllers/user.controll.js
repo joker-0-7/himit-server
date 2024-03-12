@@ -21,6 +21,8 @@ const addNewStudent = async (req, res) => {
   const student = req.body;
   const newStudent = await Student(student);
   req.file ? (newStudent.image = req.file.filename) : "";
+  newStudent.seatingNumbers = null;
+  newStudent.committeeNumber = null;
   try {
     newStudent.save();
     return res.status(201).json({ msg: "تم اضافة الطالب بنجاح" });
