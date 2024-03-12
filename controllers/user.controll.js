@@ -179,20 +179,20 @@ const examsTable = async (req, res) => {
   console.log(req.body);
 };
 const MilitaryEducation = async (req, res) => {
+  console.log(req.body);
   try {
     await Promise.all(
       req.body.map(async (s) => {
         const data = new milityEduModel({
-          section: "",
-          squad: "",
-          startDate: "",
-          endDate: "",
+          section: s.section,
+          squad: s.squad,
+          startDate: s.startDate,
+          endDate: s.endDate,
           studentId: s._id,
         });
         await data.save();
       })
     );
-
     return res.status(200).json({ msg: "تم ارسال البيانات بنجاح" });
   } catch (error) {
     console.error("Error saving data:", error);
