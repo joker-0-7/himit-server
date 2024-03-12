@@ -24,10 +24,8 @@ const Login = async (req, res) => {
   user.password = undefined;
   user.squad = user.squad.split(" ")[1];
    if (user.seatingNumbers && user.committeeNumber) {
-    let seatingNumbers = String(user.seatingNumbers);
-    let committeeNumber = String(user.committeeNumber);
-    user.seatingNumbers = seatingNumbers.split('');
-    user.committeeNumber = committeeNumber.split('');
+        user.seatingNumbers = Array.from(String(user.seatingNumbers));
+    user.committeeNumber = Array.from(String(user.committeeNumber));
   }
 
   return res.status(200).json({ user, token });
