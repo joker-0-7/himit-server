@@ -25,8 +25,8 @@ const Login = async (req, res) => {
   user.squad = user.squad.split(" ")[1];
   let srtingSeatingNumbers = String(user.seatingNumbers)
   let srtingCommitteeNumber = String(user.committeeNumber)
-user.seatingNumbers = Array.from(srtingSeatingNumbers).map(Number);
-user.committeeNumber = Array.from(srtingCommitteeNumber).map(Number);
+user.seatingNumbers = Array.from(srtingSeatingNumbers).map(String);
+user.committeeNumber = Array.from(srtingCommitteeNumber).map(String);
   console.log(user.seatingNumbers);
 console.log(user.committeeNumber);
   console.log(user)
