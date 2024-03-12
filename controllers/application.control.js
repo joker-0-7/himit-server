@@ -15,7 +15,7 @@ const {
 const cumulativeModel = require("../models/cumulative.model");
 const Login = async (req, res) => {
   const { num, password } = req.body;
-  let user = await Student.findOne({ num: num });
+  const user = await Student.findOne({ num: num });
   if (!user) return res.status(404).json({ msg: USER_NOT_FOUND });
   if (user.password !== password)
     return res.status(404).json({ msg: WROMG_PASSWORD });
@@ -23,14 +23,6 @@ const Login = async (req, res) => {
   const token = jwt.sign({ num, id }, process.env.SECRET_TOKEN);
   user.password = undefined;
   user.squad = user.squad.split(" ")[1];
-  let srtingSeatingNumbers = String(user.seatingNumbers)
-  let srtingCommitteeNumber = String(user.committeeNumber)
- user.seatingNumbers = undefined;
-  user.committeeNumber =undefined;
- user.seatingNumbers = srtingSeatingNumbers.split('');
-  user.committeeNumber =srtingCommitteeNumber.split('');
-  console.log(user.seatingNumbers);
-  console.log(user.committeeNumber);
   return res.status(200).json({ user, token });
 };
 const getData = (req, res) => {
