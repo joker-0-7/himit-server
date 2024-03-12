@@ -15,7 +15,7 @@ const {
 const cumulativeModel = require("../models/cumulative.model");
 const Login = async (req, res) => {
   const { num, password } = req.body;
-  const user = await Student.findOne({ num: num });
+  let user = await Student.findOne({ num: num });
   if (!user) return res.status(404).json({ msg: USER_NOT_FOUND });
   if (user.password !== password)
     return res.status(404).json({ msg: WROMG_PASSWORD });
