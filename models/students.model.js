@@ -46,6 +46,7 @@ const studentSchema = new mongoose.Schema(
     },
     markers: [],
     backwards: [],
+     committe: [],
   },
   { timestamps: true }
 );
