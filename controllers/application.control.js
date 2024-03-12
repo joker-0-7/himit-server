@@ -25,10 +25,10 @@ const Login = async (req, res) => {
   user.squad = user.squad.split(" ")[1];
   let srtingSeatingNumbers = String(user.seatingNumbers)
   let srtingCommitteeNumber = String(user.committeeNumber)
-  user.seatingNumbers = ['1', '2'];
-  user.committeeNumber = ['1', '7', '0'];
-console.log("srtingSeatingNumbers:", srtingSeatingNumbers);
-console.log("srtingCommitteeNumber:", srtingCommitteeNumber);
+ user.seatingNumbers = user.seatingNumbers.split("").map(num => parseInt(num));
+  user.committeeNumber = user.committeeNumber.split("").map(num => parseInt(num));
+  console.log(user.seatingNumbers);
+  console.log(user.committeeNumber);
   return res.status(200).json({ user, token });
 };
 const getData = (req, res) => {
