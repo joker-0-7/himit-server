@@ -200,12 +200,6 @@ const MilitaryEducation = async (req, res) => {
     return res.status(500).json({ msg: "حدث خطأ أثناء حفظ البيانات" });
   }
 };
-    return res.status(200).json({ msg: "تم ارسال البيانات بنجاح" });
-  } catch (error) {
-    console.error("Error saving data:", error);
-    return res.status(500).json({ msg: "حدث خطأ أثناء حفظ البيانات" });
-  }
-};
 const getClassSchedules = async (req, res) => {
   try {
     const schedule = await scheduleModel.find();
