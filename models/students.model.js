@@ -38,12 +38,10 @@ const studentSchema = new mongoose.Schema(
     },
     seatingNumbers: {
       type: Array,
-      type: String,
       default: null,
     },
     committeeNumber: {
       type: Array,
-      type: String,
       default: null,
     },
     markers: [],
