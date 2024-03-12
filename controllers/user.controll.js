@@ -182,17 +182,24 @@ const MilitaryEducation = async (req, res) => {
   console.log(req.body);
   try {
     await Promise.all(
-      req.body.map(async (s) => {
+      req.body.choseStu.map(async (s) => {
         const data = new milityEduModel({
-          section: s.section,
-          squad: s.squad,
-          startDate: s.startDate,
-          endDate: s.endDate,
+          num: req.body.spltNum,
+          section: req.body.section,
+          squad: req.body.squad,
+          startDate: req.body.startDate,
+          endDate: req.body.endDate,
           studentId: s._id,
         });
         await data.save();
       })
     );
+    return res.status(200).json({ msg: "تم ارسال البيانات بنجاح" });
+  } catch (error) {
+    console.error("Error saving data:", error);
+    return res.status(500).json({ msg: "حدث خطأ أثناء حفظ البيانات" });
+  }
+};
     return res.status(200).json({ msg: "تم ارسال البيانات بنجاح" });
   } catch (error) {
     console.error("Error saving data:", error);
