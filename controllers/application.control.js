@@ -70,7 +70,7 @@ const examsTable = async (req, res) => {
     const currentSchedule = schedule.filter((sch) => {
       return (
         String(sch.classRoom) === String(current.squad) &&
-        String(sch.academicDivision) === String(current.section) &&
+        String(sch.academicDivision) === String(current.section)
       )
     });
     if (currentSchedule.length !== 0) {
