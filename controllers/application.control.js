@@ -71,7 +71,7 @@ const examsTable = async (req, res) => {
       return (
         String(sch.classRoom) === String(current.squad) &&
         String(sch.academicDivision) === String(current.section) &&
-      );
+      )
     });
     if (currentSchedule.length !== 0) {
       return res.status(200).json(currentSchedule[0]);
