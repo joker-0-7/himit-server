@@ -6,7 +6,7 @@ const milityEduModel = require("../models/mility-edu.model");
 const scheduleModel = require("../models/schedule.model");
 const Student = require("../models/students.model");
 const jwt = require("jsonwebtoken");
-
+const examTable = require('../models/exam-table.model')
 const Login = async (req, res) => {
   const exist = await User.exists({ num: req.body.num });
   if (!exist)
@@ -152,15 +152,15 @@ const updatePassword = async (req, res) => {
   }
 };
 const examsTable = async (req, res) => {
-  const existClassRoom = await scheduleModel.exists({
+  const existClassRoom = await examTable.exists({
     classRoom: req.body.classRoom,
   });
-  const existType = await scheduleModel.exists({
+  const existType = await examTable.exists({
     type: req.body.type,
   });
   if (existType) {
     if (existClassRoom) {
-      const existAcademicDivision = await scheduleModel.exists({
+      const existAcademicDivision = await examTable.exists({
         academicDivision: req.body.academicDivision,
       });
       if (existAcademicDivision)
@@ -169,7 +169,7 @@ const examsTable = async (req, res) => {
           .json({ msg: "الجدول موجود بالفعل يرجي اختيار بيانات اخري" });
     }
   }
-  const data = new scheduleModel(req.body);
+  const data = new examTable(req.body);
   try {
     await data.save();
     return res.status(201).json({ msg: "تم اضافة الجدول بنجاح" });
