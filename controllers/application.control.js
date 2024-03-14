@@ -60,18 +60,19 @@ const getSchedule = async (req, res) => {
     return res.status(400).json({ msg: SECTION_NOT_FOUND });
   }
 };
-const examsTable = async (req, res) => {
+const getScheduleSection = async (req, res) => {
   try {
     const id = req.current;
     const current = await Student.findById(id);
-    const schedule = await examsTableModel.find().lean();
+    const schedule = await scheduleModel.find().lean();
     if (schedule.length == 0)
       return res.status(404).json({ msg: CURRENT_SECTION_NOT_FOUND });
     const currentSchedule = schedule.filter((sch) => {
       return (
         String(sch.classRoom) === String(current.squad) &&
-        String(sch.academicDivision) === String(current.section)
-      )
+        String(sch.academicDivision) === String(current.section) &&
+        String(sch.type) === String("جدول السكاشن")
+      );
     });
     if (currentSchedule.length !== 0) {
       return res.status(200).json(currentSchedule[0]);
@@ -93,19 +94,18 @@ const MilitaryEducation = async (req, res) => {
     return res.status(400).json({ msg: ERROR_MESSAGE });
   }
 };
-const getSchedule = async (req, res) => {
+const examTable = async (req, res) => {
   try {
     const id = req.current;
     const current = await Student.findById(id);
-    const schedule = await scheduleModel.find().lean();
+    const schedule = await examsTableModel.find().lean();
     if (schedule.length == 0)
-      return res.status(404).json({ msg: SECTION_NOT_FOUND });
+      return res.status(404).json({ msg: CURRENT_SECTION_NOT_FOUND });
     const currentSchedule = schedule.filter((sch) => {
       return (
         String(sch.classRoom) === String(current.squad) &&
-        String(sch.academicDivision) === String(current.section) &&
-        String(sch.type) === String("جدول المحاضرات")
-      );
+        String(sch.academicDivision) === String(current.section)
+      )
     });
     if (currentSchedule.length !== 0) {
       return res.status(200).json(currentSchedule[0]);
@@ -114,7 +114,7 @@ const getSchedule = async (req, res) => {
     }
   } catch (err) {
     console.log(err);
-    return res.status(400).json({ msg: SECTION_NOT_FOUND });
+    return res.status(400).json({ msg: ERROR_MESSAGE });
   }
 };
 const addCumulative = async (req, res) => {
