@@ -6,7 +6,7 @@ const milityEduModel = require("../models/mility-edu.model");
 const scheduleModel = require("../models/schedule.model");
 const Student = require("../models/students.model");
 const jwt = require("jsonwebtoken");
-const examTable = require('../models/exam-table.model')
+const examTable = require('../models/exams-table.model')
 const Login = async (req, res) => {
   const exist = await User.exists({ num: req.body.num });
   if (!exist)
