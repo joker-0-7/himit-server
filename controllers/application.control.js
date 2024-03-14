@@ -97,14 +97,12 @@ const MilitaryEducation = async (req, res) => {
 const examTable = async (req, res) => {
   const student = req.current;
   const data = await examsTableModel.find();
-  if (data.length == 0) return res.status(404).json({ msg: EXAM_TABLE });
   const currentData = data.filter((data) => {
     return (
       String(student.section) === String(data.academicDivision) &&
       String(student.squad) === String(data.classRoom)
     );
   });
-  if (currentData.length == 0) return res.status(404).json({ msg: EXAM_TABLE });
   return res.status(200).json(currentData[0]);
 };
 const addCumulative = async (req, res) => {
