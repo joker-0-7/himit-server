@@ -212,7 +212,7 @@ const getClassSchedules = async (req, res) => {
 const addCumulative = async (req, res) => {
   const data = req.body;
   console.log(data);
-  const newData = cumulativeModel.findByIdAndUpdata('65f8fe7270dbae86122b2194', {$set: data});
+  const newData = cumulativeModel.findByIdAndUpdate('65f8fe7270dbae86122b2194', {$set: data});
   try {
     newData.save();
   } catch (error) {
