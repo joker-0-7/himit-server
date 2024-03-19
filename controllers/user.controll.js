@@ -212,9 +212,8 @@ const getClassSchedules = async (req, res) => {
 const addCumulative = async (req, res) => {
   const data = req.body;
   console.log(data);
-  const newData = cumulativeModel.findByIdAndUpdate('65f8fe7270dbae86122b2194', {$set: data});
   try {
-    newData.save();
+  const newData = cumulativeModel.findByIdAndUpdate('65f8fe7270dbae86122b2194', {$set: data});
   } catch (error) {
     console.log(error);
     return res.status(500).json({ msg: "حدث خطأ أثناء حفظ البيانات" });
