@@ -119,7 +119,7 @@ const examTable = async (req, res) => {
 };
 const addCumulative = async (req, res) => {
   let currentUser = req.current;
-  const data = await cumulativeModel.findById("65f381003d48a1895d263a6c");
+  const data = await cumulativeModel.findById("65f8fe7270dbae86122b2194");
   const userData = data.user;
   const currentData = userData[currentUser];
   currentData.military = currentData.military.split("-")[0]
