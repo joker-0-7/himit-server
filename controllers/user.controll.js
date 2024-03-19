@@ -213,12 +213,17 @@ const addCumulative = async (req, res) => {
   const data = req.body;
   console.log(data);
   try {
-  const newData = cumulativeModel.findByIdAndUpdate('65f8fe7270dbae86122b2194', {$set: data});
+    const updatedData = await cumulativeModel.findByIdAndUpdate('65f8fe7270dbae86122b2194', data, { new: true });
+    if (!updatedData) {
+      return res.status(404).json({ msg: "الوثيقة غير موجودة" });
+    }
+    return res.status(200).json({ msg: "تم تحديث الوثيقة بنجاح", updatedData });
   } catch (error) {
     console.log(error);
     return res.status(500).json({ msg: "حدث خطأ أثناء حفظ البيانات" });
   }
 };
+
 const deleteSchedules = async (req, res) => {
   const id = req.params.id;
   try {
