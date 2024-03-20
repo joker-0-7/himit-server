@@ -211,9 +211,12 @@ const getClassSchedules = async (req, res) => {
 };
 const addCumulative = async (req, res) => {
   const data = req.body;
-  console.log(data);
   try {
-    const updatedData = await cumulativeModel.findByIdAndUpdate('65f8fe7270dbae86122b2194', data, { new: true });
+    const updatedData = await cumulativeModel.findOneAndUpdate(
+      { _id: '65f8fe7270dbae86122b2194' }, // تحديد الوثيقة بالـ id
+      { $set: { "user": { ...data, ...{ "user": "$user" } } } }, // إضافة البيانات المستلمة إلى خاصية user داخل الوثيقة
+      { new: true }
+    );
     if (!updatedData) {
       return res.status(404).json({ msg: "الوثيقة غير موجودة" });
     }
@@ -223,6 +226,7 @@ const addCumulative = async (req, res) => {
     return res.status(500).json({ msg: "حدث خطأ أثناء حفظ البيانات" });
   }
 };
+
 
 const deleteSchedules = async (req, res) => {
   const id = req.params.id;
