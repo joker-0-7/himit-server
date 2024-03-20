@@ -121,8 +121,8 @@ const addCumulative = async (req, res) => {
   let currentUser = req.current;
   const data = await cumulativeModel.findById("65f8fe7270dbae86122b2194");
   const userData = data.user;
-  userData.map((user)=> console.log(user))
-  const currentData = userData[currentUser];
+  userData.map((user)=> user == currentUser )
+  const currentData = userData;
   if(currentData && currentData.military){
     currentData.military = currentData.military.split("-")[0]
   }
