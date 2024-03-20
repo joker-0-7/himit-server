@@ -122,7 +122,9 @@ const addCumulative = async (req, res) => {
   const data = await cumulativeModel.findById("65f8fe7270dbae86122b2194");
   const userData = data.user;
   const currentData = userData[currentUser];
-  currentData.military = currentData.military.split("-")[0]
+  if(currentData && currentData.military){
+    currentData.military = currentData.military.split("-")[0]
+  }
   console.log(currentData);
   return res.status(201).json(currentData);
 };
