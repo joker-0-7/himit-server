@@ -117,23 +117,51 @@ const examTable = async (req, res) => {
     return res.status(400).json({ msg: ERROR_MESSAGE });
   }
 };
+// const addCumulative = async (req, res) => {
+//   const currentUser = req.current;
+//   try {
+//     const data = await cumulativeModel.findById("65f8fe7270dbae86122b2194");
+//     if (!data) {
+//       return res.status(404).json({ msg: "البيانات غير موجودة" });
+//     }
+//     const userData = data.user;
+//     const currentUserData = userData.find(user => user === currentUser);
+//     if (!currentUserData) {
+//       return res.status(404).json({ msg: "المستخدم غير موجود في البيانات" });
+//     }
+//     if (currentUserData.military) {
+//       currentUserData.military = currentUserData.military.split("-")[0];
+//     }
+//     console.log(currentUserData);
+//     return res.status(201).json(currentUserData);
+//   } catch (error) {
+//     console.log(error);
+//     return res.status(500).json({ msg: "حدث خطأ أثناء جلب البيانات" });
+//   }
+// };
 const addCumulative = async (req, res) => {
-  const currentUser = req.current;
+  const userIdToSearch =  req.current // يمكنك تغييره إلى الـ ID الذي تريد البحث عنه
+
   try {
     const data = await cumulativeModel.findById("65f8fe7270dbae86122b2194");
     if (!data) {
       return res.status(404).json({ msg: "البيانات غير موجودة" });
     }
     const userData = data.user;
-    const currentUserData = userData.find(user => user === currentUser);
-    if (!currentUserData) {
+
+    // البحث عن بيانات المستخدم بناء على الـ ID
+    const user = userData.find(user => Object.keys(user)[0] === userIdToSearch);
+    
+    if (!user) {
       return res.status(404).json({ msg: "المستخدم غير موجود في البيانات" });
     }
-    if (currentUserData.military) {
-      currentUserData.military = currentUserData.military.split("-")[0];
-    }
-    console.log(currentUserData);
-    return res.status(201).json(currentUserData);
+
+    const userDataValues = Object.values(user)[0]; // الحصول على القيم الخاصة بالمستخدم
+
+    // يمكنك القيام بأي عمليات تحويل البيانات أو المعالجة اللازمة هنا
+    
+    console.log(userDataValues);
+    return res.status(201).json(userDataValues);
   } catch (error) {
     console.log(error);
     return res.status(500).json({ msg: "حدث خطأ أثناء جلب البيانات" });
