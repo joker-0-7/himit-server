@@ -214,7 +214,7 @@ const addCumulative = async (req, res) => {
   try {
     const updatedData = await cumulativeModel.findOneAndUpdate(
       { _id: '65f8fe7270dbae86122b2194' },
-      { $push:  {user:data}  }
+      { $push:  {"user":data}  }
     );
     if (!updatedData) {
       return res.status(404).json({ msg: "الوثيقة غير موجودة" });
