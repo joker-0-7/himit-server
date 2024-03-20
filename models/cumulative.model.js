@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const cumulativesSchema = mongoose.Schema(
   {
     user: {
-      type: Object,
+      type: Array,
     },
   },
   { timestamps: true }
