@@ -214,7 +214,7 @@ const addCumulative = async (req, res) => {
   try {
     const updatedData = await cumulativeModel.findOneAndUpdate(
       { _id: '65f8fe7270dbae86122b2194' }, // تحديد الوثيقة بالـ id
-      { $set: { "user": { ...data, ...{ "user": "$user" } } } }, // إضافة البيانات المستلمة إلى خاصية user داخل الوثيقة
+      { $set: { "user": { ...data, ...{ data } } } }, // إضافة البيانات المستلمة إلى خاصية user داخل الوثيقة
       { new: true }
     );
     if (!updatedData) {
