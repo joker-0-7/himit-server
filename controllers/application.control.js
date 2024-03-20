@@ -118,17 +118,28 @@ const examTable = async (req, res) => {
   }
 };
 const addCumulative = async (req, res) => {
-  let currentUser = req.current;
-  const data = await cumulativeModel.findById("65f8fe7270dbae86122b2194");
-  const userData = data.user;
-  userData.map((user)=> user == currentUser )
-  const currentData = userData;
-  if(currentData && currentData.military){
-    currentData.military = currentData.military.split("-")[0]
+  const currentUser = req.current;
+  try {
+    const data = await cumulativeModel.findById("65f8fe7270dbae86122b2194");
+    if (!data) {
+      return res.status(404).json({ msg: "البيانات غير موجودة" });
+    }
+    const userData = data.user;
+    const currentUserData = userData.find(user => user === currentUser);
+    if (!currentUserData) {
+      return res.status(404).json({ msg: "المستخدم غير موجود في البيانات" });
+    }
+    if (currentUserData.military) {
+      currentUserData.military = currentUserData.military.split("-")[0];
+    }
+    console.log(currentUserData);
+    return res.status(201).json(currentUserData);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ msg: "حدث خطأ أثناء جلب البيانات" });
   }
-  console.log(currentData);
-  return res.status(201).json(currentData);
 };
+
 module.exports = {
   Login,
   getData,
