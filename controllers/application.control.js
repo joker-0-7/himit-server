@@ -96,12 +96,14 @@ const MilitaryEducation = async (req, res) => {
 };
 const examTable = async (req, res) => {
   const student = req.current;
+    const current = await Student.findById(id);
   const data = await examsTableModel.find();
   if (data.length == 0) return res.status(404).json({ msg: EXAM_TABLE });
   const currentData = data.filter((data) => {
     return (
-      String(student.section) === String(data.academicDivision) &&
-      String(student.squad) === String(data.classRoom)
+      String(current.section) === String(data.academicDivision) &&
+      String(current.squad) === String(data.classRoom) &&
+       String(data.type) == String("مسد ترم")
     );
   });
   console.log(currentData)
@@ -110,12 +112,13 @@ const examTable = async (req, res) => {
 };
 const examTableOne = async (req, res) => {
   const student = req.current;
+  const current = await Student.findById(id);
   const data = await examsTableModel.find();
   if (data.length == 0) return res.status(404).json({ msg: EXAM_TABLE });
   const currentData = data.filter((data) => {
     return (
-      String(student.section) === String(data.academicDivision) &&
-      String(student.squad) === String(data.classRoom) &&
+      String(current.section) === String(data.academicDivision) &&
+      String(current.squad) === String(data.classRoom) &&
       String(data.type) == String("فاينال")
       
     );
@@ -126,12 +129,13 @@ const examTableOne = async (req, res) => {
 };
 const examTableTwo = async (req, res) => {
   const student = req.current;
+  const current = await Student.findById(id);
   const data = await examsTableModel.find();
   if (data.length == 0) return res.status(404).json({ msg: EXAM_TABLE });
   const currentData = data.filter((data) => {
     return (
-      String(student.section) === String(data.academicDivision) &&
-      String(student.squad) === String(data.classRoom) &&
+      String(current.section) === String(data.academicDivision) &&
+      String(current.squad) === String(data.classRoom) &&
       String(data.type) == String("تخلفات")
     );
   });
