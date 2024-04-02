@@ -49,6 +49,10 @@ const studentSchema = new mongoose.Schema(
     backwards: [],
     final: [],
     committe: [],
+    التقدير: String,
+    النسبة: String,
+    المجموع: String,
+    serialNumber: String,
   },
   { timestamps: true }
 );
