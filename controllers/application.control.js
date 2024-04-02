@@ -101,7 +101,7 @@ const examTable = async (req, res) => {
   const currentData = data.filter((data) => {
     return (
       String(student.section) === String(data.academicDivision) &&
-      String(student.squad) === String(data.classRoom) &&
+      String(student.squad) === String(data.classRoom)
     );
   });
   console.log(currentData)
