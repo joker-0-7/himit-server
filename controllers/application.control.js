@@ -95,79 +95,56 @@ const MilitaryEducation = async (req, res) => {
   }
 };
 const examTable = async (req, res) => {
-  try {
-    const id = req.current;
-    const current = await Student.findById(id);
-    const schedule = await examsTableModel.find().lean();
-    if (schedule.length == 0)
-      return res.status(404).json({ msg: CURRENT_SECTION_NOT_FOUND });
-    const currentSchedule = schedule.filter((sch) => {
-      return (
-        String(sch.classRoom) === String(current.squad) &&
-        String(sch.academicDivision) === String(current.section)
-      )
-    });
-    if (currentSchedule.length !== 0) {
-      return res.status(200).json(currentSchedule[0]);
-    } else {
-      return res.status(404).json({ msg: CURRENT_SECTION_NOT_FOUND });
-    }
-  } catch (err) {
-    console.log(err);
-    return res.status(400).json({ msg: ERROR_MESSAGE });
-  }
+  const student = req.current;
+  const data = await examsTableModel.find();
+  if (data.length == 0) return res.status(404).json({ msg: EXAM_TABLE });
+  const currentData = data.filter((data) => {
+    return (
+      String(student.section) === String(data.academicDivision) &&
+      String(student.squad) === String(data.classRoom) &&
+      String(data.type) === "ميد ترم"
+    );
+  });
+  if (currentData.length == 0) return res.status(404).json({ msg: EXAM_TABLE });
+  return res.status(200).json(currentData[0]);
 };
-// const addCumulative = async (req, res) => {
-//   const currentUser = req.current;
-//   try {
-//     const data = await cumulativeModel.findById("65f8fe7270dbae86122b2194");
-//     if (!data) {
-//       return res.status(404).json({ msg: "البيانات غير موجودة" });
-//     }
-//     const userData = data.user;
-//     const currentUserData = userData.find(user => user === currentUser);
-//     if (!currentUserData) {
-//       return res.status(404).json({ msg: "المستخدم غير موجود في البيانات" });
-//     }
-//     if (currentUserData.military) {
-//       currentUserData.military = currentUserData.military.split("-")[0];
-//     }
-//     console.log(currentUserData);
-//     return res.status(201).json(currentUserData);
-//   } catch (error) {
-//     console.log(error);
-//     return res.status(500).json({ msg: "حدث خطأ أثناء جلب البيانات" });
-//   }
-// };
+const examTableOne = async (req, res) => {
+  const student = req.current;
+  const data = await examsTableModel.find();
+  if (data.length == 0) return res.status(404).json({ msg: EXAM_TABLE });
+  const currentData = data.filter((data) => {
+    return (
+      String(student.section) === String(data.academicDivision) &&
+      String(student.squad) === String(data.classRoom) &&
+      String(data.type) === "فاينال"
+    );
+  });
+  if (currentData.length == 0) return res.status(404).json({ msg: EXAM_TABLE });
+  return res.status(200).json(currentData[0]);
+};
+const examTableTwo = async (req, res) => {
+  const student = req.current;
+  const data = await examsTableModel.find();
+  if (data.length == 0) return res.status(404).json({ msg: EXAM_TABLE });
+  const currentData = data.filter((data) => {
+    return (
+      String(student.section) === String(data.academicDivision) &&
+      String(student.squad) === String(data.classRoom) &&
+      String(data.type) === "تخلفات"
+    );
+  });
+  if (currentData.length == 0) return res.status(404).json({ msg: EXAM_TABLE });
+  return res.status(200).json(currentData[0]);
+};
 const addCumulative = async (req, res) => {
-  const userIdToSearch =  req.current // يمكنك تغييره إلى الـ ID الذي تريد البحث عنه
-
-  try {
-    const data = await cumulativeModel.findById("65f8fe7270dbae86122b2194");
-    if (!data) {
-      return res.status(404).json({ msg: "البيانات غير موجودة" });
-    }
-    const userData = data.user;
-
-    // البحث عن بيانات المستخدم بناء على الـ ID
-    const user = userData.find(user => Object.keys(user)[0] === userIdToSearch);
-    
-    if (!user) {
-      return res.status(404).json({ msg: "المستخدم غير موجود في البيانات" });
-    }
-
-    const userDataValues = Object.values(user)[0]; // الحصول على القيم الخاصة بالمستخدم
-
-    // يمكنك القيام بأي عمليات تحويل البيانات أو المعالجة اللازمة هنا
-    
-    console.log(userDataValues);
-    return res.status(201).json(userDataValues);
-  } catch (error) {
-    console.log(error);
-    return res.status(500).json({ msg: "حدث خطأ أثناء جلب البيانات" });
-  }
+  let currentUser = req.current;
+  const data = await cumulativeModel.findById("65ccc209dad0ad14d494da15");
+  const userData = data.user;
+  const currentData = userData[currentUser];
+  currentData.military = currentData.military.split("-")[0];
+  console.log(currentData);
+  return res.status(201).json(currentData);
 };
-
 module.exports = {
   Login,
   getData,
@@ -178,4 +155,6 @@ module.exports = {
   getScheduleSection,
   examTable,
   addCumulative,
+  examTableTwo,
+  examTableOne,
 };
