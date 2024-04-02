@@ -185,8 +185,6 @@ const MilitaryEducation = async (req, res) => {
       req.body.choseStu.map(async (s) => {
         const data = new milityEduModel({
           num: req.body.spltNum,
-          section: req.body.section,
-          squad: req.body.squad,
           startDate: req.body.startDate,
           endDate: req.body.endDate,
           studentId: s._id,
