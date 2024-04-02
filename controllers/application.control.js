@@ -105,7 +105,7 @@ const examTable = async (req, res) => {
       data.type == "ميد ترم"
     );
   });
-  console.log(data)
+  console.log(currentData)
   if (currentData.length == 0) return res.status(404).json({ msg: EXAM_TABLE });
   return res.status(200).json(currentData[0]);
 };
@@ -120,7 +120,7 @@ const examTableOne = async (req, res) => {
       data.type == "فاينال"
     );
   });
-  console.log(data)
+  console.log(currentData)
   if (currentData.length == 0) return res.status(404).json({ msg: EXAM_TABLE });
   return res.status(200).json(currentData[0]);
 };
@@ -135,7 +135,7 @@ const examTableTwo = async (req, res) => {
       data.type == "تخلفات"
     );
   });
-  console.log(data)
+  console.log(currentData)
   if (currentData.length == 0) return res.status(404).json({ msg: EXAM_TABLE });
   return res.status(200).json(currentData[0]);
 };
