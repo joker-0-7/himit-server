@@ -102,9 +102,10 @@ const examTable = async (req, res) => {
     return (
       String(student.section) === String(data.academicDivision) &&
       String(student.squad) === String(data.classRoom) &&
-      String(data.type) === "ميد ترم"
+      data.type == "ميد ترم"
     );
   });
+  console.log(data)
   if (currentData.length == 0) return res.status(404).json({ msg: EXAM_TABLE });
   return res.status(200).json(currentData[0]);
 };
@@ -116,9 +117,10 @@ const examTableOne = async (req, res) => {
     return (
       String(student.section) === String(data.academicDivision) &&
       String(student.squad) === String(data.classRoom) &&
-      String(data.type) === "فاينال"
+      data.type == "فاينال"
     );
   });
+  console.log(data)
   if (currentData.length == 0) return res.status(404).json({ msg: EXAM_TABLE });
   return res.status(200).json(currentData[0]);
 };
@@ -130,9 +132,10 @@ const examTableTwo = async (req, res) => {
     return (
       String(student.section) === String(data.academicDivision) &&
       String(student.squad) === String(data.classRoom) &&
-      String(data.type) === "تخلفات"
+      data.type == "تخلفات"
     );
   });
+  console.log(data)
   if (currentData.length == 0) return res.status(404).json({ msg: EXAM_TABLE });
   return res.status(200).json(currentData[0]);
 };
