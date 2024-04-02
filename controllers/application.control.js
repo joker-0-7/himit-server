@@ -100,8 +100,8 @@ const examTable = async (req, res) => {
   if (data.length == 0) return res.status(404).json({ msg: EXAM_TABLE });
   const currentData = data.filter((data) => {
     return (
-      String(student.section) === String(data.academicDivision) &&
-      String(student.squad) === String(data.classRoom) &&
+      String(student.squad) === String(data.academicDivision) &&
+      String(student.section) === String(data.classRoom) &&
       String(data.type) == String("ميد ترم")
     );
   });
