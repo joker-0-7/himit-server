@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+
 const studentSchema = new mongoose.Schema(
   {
     fristName: {
@@ -46,7 +47,8 @@ const studentSchema = new mongoose.Schema(
     },
     markers: [],
     backwards: [],
-     committe: [],
+    final: [],
+    committe: [],
   },
   { timestamps: true }
 );
