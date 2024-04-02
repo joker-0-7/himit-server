@@ -102,7 +102,7 @@ const examTable = async (req, res) => {
     return (
       String(student.section) === String(data.academicDivision) &&
       String(student.squad) === String(data.classRoom) &&
-      data.type == "ميد ترم"
+      String(data.type) == String("ميد ترم")
     );
   });
   console.log(currentData)
@@ -117,7 +117,8 @@ const examTableOne = async (req, res) => {
     return (
       String(student.section) === String(data.academicDivision) &&
       String(student.squad) === String(data.classRoom) &&
-      data.type == "فاينال"
+      String(data.type) == String("فاينال")
+      
     );
   });
   console.log(currentData)
@@ -132,7 +133,7 @@ const examTableTwo = async (req, res) => {
     return (
       String(student.section) === String(data.academicDivision) &&
       String(student.squad) === String(data.classRoom) &&
-      data.type == "تخلفات"
+      String(data.type) == String("تخلفات")
     );
   });
   console.log(currentData)
