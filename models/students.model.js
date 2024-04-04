@@ -50,16 +50,20 @@ const studentSchema = new mongoose.Schema(
     final: [],
     committe: [],
     التقدير: {
-      type: String
+      type: String,
+      default: null,
     },
     النسبة: {
-      type: String
+      type: String,
+      default: null,
     },
     المجموع: {
-      type: String
+      type: String,
+      default: null,
     },
     serialNumber: {
-      type: String
+      type: String,
+      default: null,
     },
   },
   { timestamps: true }

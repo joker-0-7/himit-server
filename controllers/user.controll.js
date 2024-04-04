@@ -1,12 +1,13 @@
 const { ERROR_MESSAGE } = require("../constants/msg");
 const AboutApp = require("../models/aboutApp.model");
 const cumulativeModel = require("../models/cumulative.model");
+const examsTableModel = require("../models/exams-table.model");
 const User = require("../models/login.model");
 const milityEduModel = require("../models/mility-edu.model");
 const scheduleModel = require("../models/schedule.model");
 const Student = require("../models/students.model");
 const jwt = require("jsonwebtoken");
-const examTable = require('../models/exams-table.model')
+
 const Login = async (req, res) => {
   const exist = await User.exists({ num: req.body.num });
   if (!exist)
@@ -65,6 +66,7 @@ const deleteStudent = async (req, res) => {
 };
 const addSeatingNumbers = async (req, res) => {
   const data = req.body;
+  console.log(data);
   const addNum = async (student) => {
     await Student.findByIdAndUpdate(student._id, student);
   };
@@ -114,21 +116,6 @@ const classSchedules = async (req, res) => {
     console.log(error);
   }
 };
-const GoalApplication = async (req, res) => {
-  const id = req.params.id;
-  const data = req.body;
-  try {
-    const newData = await AboutApp.findByIdAndUpdate(
-      id,
-      { $set: data },
-      { new: true }
-    );
-    return res.status(200).json({ msg: "تم تغيير القسم بنجاح" });
-  } catch (error) {
-    console.log(error);
-    return res.status(400).json({ msg: "حدث خطأ ما برجاء المحاولة مرة اخري" });
-  }
-};
 const getContent = async (req, res) => {
   const content = await AboutApp.find();
   return res.status(200).json(content[0]);
@@ -152,15 +139,15 @@ const updatePassword = async (req, res) => {
   }
 };
 const examsTable = async (req, res) => {
-  const existClassRoom = await examTable.exists({
+  const existClassRoom = await examsTableModel.exists({
     classRoom: req.body.classRoom,
   });
-  const existType = await examTable.exists({
+  const existType = await examsTableModel.exists({
     type: req.body.type,
   });
   if (existType) {
     if (existClassRoom) {
-      const existAcademicDivision = await examTable.exists({
+      const existAcademicDivision = await examsTableModel.exists({
         academicDivision: req.body.academicDivision,
       });
       if (existAcademicDivision)
@@ -169,7 +156,7 @@ const examsTable = async (req, res) => {
           .json({ msg: "الجدول موجود بالفعل يرجي اختيار بيانات اخري" });
     }
   }
-  const data = new examTable(req.body);
+  const data = new examsTableModel(req.body);
   try {
     await data.save();
     return res.status(201).json({ msg: "تم اضافة الجدول بنجاح" });
@@ -179,25 +166,58 @@ const examsTable = async (req, res) => {
   console.log(req.body);
 };
 const MilitaryEducation = async (req, res) => {
-  console.log(req.body);
   try {
+    // التحقق من وجود البيانات المطلوبة في طلب الويب
+    if (
+      !req.body.choseStu ||
+      !Array.isArray(req.body.choseStu) ||
+      !req.body.spltNum ||
+      !req.body.startDate ||
+      !req.body.endDate
+    ) {
+      return res.status(400).json({ msg: "بيانات غير صحيحة" });
+    }
+
+    // حفظ بيانات التعليم العسكري لكل طالب
     await Promise.all(
       req.body.choseStu.map(async (s) => {
-        const data = new milityEduModel({
-          num: req.body.spltNum,
-          startDate: req.body.startDate,
-          endDate: req.body.endDate,
-          studentId: s._id,
-        });
-        await data.save();
+        // تحديث بيانات التعليم العسكري إذا كانت موجودة بالفعل، وإلا إنشاء وحفظها
+        try {
+          const filter = { studentId: s._id };
+          const update = {
+            num: req.body.spltNum,
+            startDate: req.body.startDate,
+            endDate: req.body.endDate,
+          };
+          const options = { upsert: true, new: true };
+          const result = await milityEduModel.findOneAndUpdate(
+            filter,
+            update,
+            options
+          );
+          console.log("Result:", result);
+        } catch (error) {
+          // التحقق مما إذا كان الخطأ ناتجًا عن وجود بيانات مكررة
+          if (error.code === 11000) {
+            console.log("Duplicate data:", s._id);
+            // يمكنك تنفيذ الإجراء المطلوب هنا مثل إرسال رسالة خطأ أو تحديث بيانات أخرى
+          } else {
+            console.error("Error saving data:", error);
+            throw error;
+          }
+        }
       })
     );
-    return res.status(200).json({ msg: "تم ارسال البيانات بنجاح" });
+
+    // إرجاع رسالة نجاح إلى العميل
+    return res.status(200).json({ msg: "تم إرسال البيانات بنجاح" });
   } catch (error) {
     console.error("Error saving data:", error);
+    // إرجاع رسالة خطأ في حالة فشل العملية
     return res.status(500).json({ msg: "حدث خطأ أثناء حفظ البيانات" });
   }
 };
+
 const getClassSchedules = async (req, res) => {
   try {
     const schedule = await scheduleModel.find();
@@ -211,8 +231,8 @@ const addCumulative = async (req, res) => {
   const data = req.body;
   try {
     const updatedData = await cumulativeModel.findOneAndUpdate(
-      { _id: '65f8fe7270dbae86122b2194' },
-      { $push:  {"user":data}  }
+      { _id: "660eda04d0c308ef4b038fe8" },
+      { $push: { user: data } }
     );
     if (!updatedData) {
       return res.status(404).json({ msg: "الوثيقة غير موجودة" });
@@ -223,8 +243,6 @@ const addCumulative = async (req, res) => {
     return res.status(500).json({ msg: "حدث خطأ أثناء حفظ البيانات" });
   }
 };
-
-
 
 const deleteSchedules = async (req, res) => {
   const id = req.params.id;
@@ -237,12 +255,21 @@ const deleteSchedules = async (req, res) => {
   }
 };
 const addCommitte = async (req, res) => {
-  const data = req.body;
-  const addNum = async (student) => {
-    await Student.findByIdAndUpdate(student._id, student);
-  };
-  data.map((student) => addNum(student));
+  const data = req.body.choseStu || req.body;
+  console.log(data);
+  try {
+    await Promise.all(
+      data.map(async (student) => {
+        await Student.findByIdAndUpdate(student._id, student);
+      })
+    );
+    return res.status(200).json({ msg: "تم تحديث البيانات بنجاح" });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ msg: "حدث خطأ أثناء تحديث البيانات" });
+  }
 };
+
 const getSchedule = async (req, res) => {
   const id = req.params.id;
   const schedule = await scheduleModel.findById(id);
@@ -275,7 +302,6 @@ module.exports = {
   updateData,
   classSchedules,
   getContent,
-  GoalApplication,
   updatePassword,
   examsTable,
   MilitaryEducation,

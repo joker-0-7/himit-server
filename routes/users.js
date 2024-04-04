@@ -33,21 +33,14 @@ const uploadUsers = multer({ storage: storageUsers });
 
 router.post("/login", userControll.Login);
 router.get("/students", userControll.getStudents);
-router.post(
-  "/add-new-user",
-
-  upload.single("img"),
-  userControll.addNewStudent
-);
+router.post("/add-new-user", upload.single("img"), userControll.addNewStudent);
 router.post(
   "/update-student/:id",
-
   upload.single("img"),
   userControll.updateStudent
 );
 router.put(
   "/update-data/:id",
-
   uploadUsers.single("img"),
   userControll.updateData
 );
@@ -60,7 +53,6 @@ router.get("/class-schedules", userControll.getClassSchedules);
 router.get("/class-schedules/:id", userControll.getSchedule);
 router.put("/class-schedules/:id", userControll.editSchedule);
 router.post("/exams-table", userControll.examsTable);
-router.put("/goal-application/:id", userControll.GoalApplication);
 router.get("/goal-application", userControll.getContent);
 router.post("/update-password/:id", userControll.updatePassword);
 router.post("/mility-edu", userControll.MilitaryEducation);

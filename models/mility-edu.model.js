@@ -9,7 +9,6 @@ const MilitaryEducationSchema = new mongoose.Schema({
   },
   studentId: {
     type: String,
-    unique: true,
   },
   num: {
     type: Array,
