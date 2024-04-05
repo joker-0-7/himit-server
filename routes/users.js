@@ -53,6 +53,8 @@ router.get("/class-schedules", userControll.getClassSchedules);
 router.get("/class-schedules/:id", userControll.getSchedule);
 router.put("/class-schedules/:id", userControll.editSchedule);
 router.post("/exams-table", userControll.examsTable);
+router.get("/exams-table", userControll.getExamsTable);
+router.delete("/exams-table/:id", userControll.DelExamsTable);
 router.get("/goal-application", userControll.getContent);
 router.post("/update-password/:id", userControll.updatePassword);
 router.post("/mility-edu", userControll.MilitaryEducation);

@@ -291,6 +291,19 @@ const editSchedule = async (req, res) => {
     return res.status(404).json(ERROR_MESSAGE);
   }
 };
+const getExamsTable = async (req, res) => {
+  const data = await examsTableModel.find();
+  if (data.length === 0) {
+    return res.status(404).json("لا يوجد بيانات");
+  } else {
+    return res.status(200).json(data);
+  }
+};
+const DelExamsTable = async (req, res) => {
+  const id = req.params.id;
+  const data = await examsTableModel.findByIdAndDelete(id);
+  return res.status(200).json({ msg: "تم حذف البيانات بنجاح" });
+};
 module.exports = {
   Login,
   addNewStudent,
@@ -310,5 +323,7 @@ module.exports = {
   deleteSchedules,
   addCommitte,
   getSchedule,
+  getExamsTable,
   editSchedule,
+  DelExamsTable,
 };
