@@ -96,43 +96,50 @@ const MilitaryEducation = async (req, res) => {
 };
 const examTable = async (req, res) => {
   const student = req.current;
+    const current = await Student.findById(student);
   const data = await examsTableModel.find();
   if (data.length == 0) return res.status(404).json({ msg: EXAM_TABLE });
   const currentData = data.filter((data) => {
     return (
-      String(student.section) === String(data.academicDivision) &&
-      String(student.squad) === String(data.classRoom) &&
-      String(data.type) === "ميد ترم"
+      String(current.section) === String(data.academicDivision) &&
+      String(current.squad) === String(data.classRoom) &&
+       String(data.type) == String("ميد ترم")
     );
   });
+  console.log(currentData)
   if (currentData.length == 0) return res.status(404).json({ msg: EXAM_TABLE });
   return res.status(200).json(currentData[0]);
 };
 const examTableOne = async (req, res) => {
   const student = req.current;
+  const current = await Student.findById(student);
   const data = await examsTableModel.find();
   if (data.length == 0) return res.status(404).json({ msg: EXAM_TABLE });
   const currentData = data.filter((data) => {
     return (
-      String(student.section) === String(data.academicDivision) &&
-      String(student.squad) === String(data.classRoom) &&
-      String(data.type) === "فاينال"
+      String(current.section) === String(data.academicDivision) &&
+      String(current.squad) === String(data.classRoom) &&
+      String(data.type) == String("فاينال")
+      
     );
   });
+  console.log(currentData)
   if (currentData.length == 0) return res.status(404).json({ msg: EXAM_TABLE });
   return res.status(200).json(currentData[0]);
 };
 const examTableTwo = async (req, res) => {
   const student = req.current;
+  const current = await Student.findById(student);
   const data = await examsTableModel.find();
   if (data.length == 0) return res.status(404).json({ msg: EXAM_TABLE });
   const currentData = data.filter((data) => {
     return (
-      String(student.section) === String(data.academicDivision) &&
-      String(student.squad) === String(data.classRoom) &&
-      String(data.type) === "تخلفات"
+      String(current.section) === String(data.academicDivision) &&
+      String(current.squad) === String(data.classRoom) &&
+      String(data.type) == String("تخلفات")
     );
   });
+  console.log(currentData)
   if (currentData.length == 0) return res.status(404).json({ msg: EXAM_TABLE });
   return res.status(200).json(currentData[0]);
 };
@@ -141,9 +148,12 @@ const addCumulative = async (req, res) => {
   const data = await cumulativeModel.findById("660eda04d0c308ef4b038fe8");
   const userData = data.user;
   const currentData = userData[currentUser];
-  currentData.military = currentData.military.split("-")[0];
-  console.log(currentData);
-  return res.status(201).json(currentData);
+  if(currentData.military) 
+  {currentData.military = currentData.military.split("-")[0];
+  return res.status(201).json(currentData)}
+  else{
+  return res.status(404)}
+  }  
 };
 module.exports = {
   Login,
