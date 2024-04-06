@@ -153,7 +153,6 @@ const addCumulative = async (req, res) => {
   return res.status(201).json(currentData)}
   else{
   return res.status(404)}
-  }  
 };
 module.exports = {
   Login,
