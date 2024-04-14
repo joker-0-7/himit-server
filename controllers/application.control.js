@@ -144,15 +144,32 @@ const examTableTwo = async (req, res) => {
   return res.status(200).json(currentData[0]);
 };
 const addCumulative = async (req, res) => {
-  let currentUser = req.current;
-  const data = await cumulativeModel.findById("660eda04d0c308ef4b038fe8");
-  const userData = data.user;
-  const currentData = userData[currentUser];
-  if(currentData.military) 
-  {currentData.military = currentData.military.split("-")[0];
-  return res.status(201).json(currentData)}
-  else{
-  return res.status(404)}
+const userIdToSearch =  req.current // يمكنك تغييره إلى الـ ID الذي تريد البحث عنه
+
+  try {
+    const data = await cumulativeModel.findById("65f8fe7270dbae86122b2194");
+    if (!data) {
+      return res.status(404).json({ msg: "البيانات غير موجودة" });
+    }
+    const userData = data.user;
+
+    // البحث عن بيانات المستخدم بناء على الـ ID
+    const user = userData.find(user => Object.keys(user)[0] === userIdToSearch);
+
+    if (!user) {
+      return res.status(404).json({ msg: "المستخدم غير موجود في البيانات" });
+    }
+
+    const userDataValues = Object.values(user)[0]; // الحصول على القيم الخاصة بالمستخدم
+
+    // يمكنك القيام بأي عمليات تحويل البيانات أو المعالجة اللازمة هنا
+
+    console.log(userDataValues);
+    return res.status(201).json(userDataValues);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ msg: "حدث خطأ أثناء جلب البيانات" });
+  }
 };
 module.exports = {
   Login,
