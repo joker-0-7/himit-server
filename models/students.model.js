@@ -25,6 +25,9 @@ const studentSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    group:{
+      type: String,
+    },
     studyCase: {
       type: String,
       required: true,
