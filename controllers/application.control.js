@@ -150,7 +150,7 @@ const addCumulative = async (req, res) => {
 const userIdToSearch =  req.current // يمكنك تغييره إلى الـ ID الذي تريد البحث عنه
 
   try {
-    const data = await cumulativeModel.findById("65f8fe7270dbae86122b2194");
+    const data = await cumulativeModel.findById("660eda04d0c308ef4b038fe8");
     if (!data) {
       return res.status(404).json({ msg: "البيانات غير موجودة" });
     }
