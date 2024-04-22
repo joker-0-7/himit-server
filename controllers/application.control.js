@@ -170,6 +170,7 @@ const addCumulative = async (req, res) => {
     if (!userFound) {
       return res.status(404).json({ msg: "المستخدم غير موجود في البيانات" });
     }
+     userFound.military = userFound.military.split("-")[0];
     return res.status(201).json(userFound);
   } catch (error) {
     console.log(error);
