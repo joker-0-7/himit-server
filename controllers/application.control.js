@@ -14,7 +14,7 @@ const {
 } = require("../constants/msg");
 const cumulativeModel = require("../models/cumulative.model");
 const Login = async (req, res) => {
-  const { num, password } = req.body;
+  let { num, password } = req.body;
   num = Number(num)
   console.log(num, password)
   console.log(typeof num, typeof password)
