@@ -146,10 +146,9 @@ const examTableTwo = async (req, res) => {
   if (currentData.length == 0) return res.status(404).json({ msg: EXAM_TABLE });
   return res.status(200).json(currentData[0]);
 };
-
 const addCumulative = async (req, res) => {
   const userIdToSearch = req.current; // يمكنك تغييره إلى الـ ID الذي تريد البحث عنه
-  
+
   try {
     const data = await cumulativeModel.findById("660eda04d0c308ef4b038fe8");
     if (!data) {
@@ -157,27 +156,27 @@ const addCumulative = async (req, res) => {
     }
     const userData = data.user;
 
-    // ترتيب بيانات المستخدمين بناءً على الوقت الذي تم به إضافة البيانات
-    userData.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+    const userValues = Object.values(userData);
 
-    // استرداد القيمة الأخيرة بناءً على الترتيب
-    const latestUserData = userData[0];
-
-    const user = latestUserData.find(user => Object.keys(user)[0] === userIdToSearch);
-
-    if (!user) {
-      return res.status(404).json({ msg: "المستخدم غير موجود في البيانات" });
+    if (userValues.length === 0) {
+      return res.status(404).json({ msg: "لا توجد بيانات للمستخدمين" });
     }
 
-    const userDataValues = Object.values(user)[0]; // الحصول على القيم الخاصة بالمستخدم
+    const lastUserAdded = userValues[userValues.length - 1];
+    const userFound = lastUserAdded.hasOwnProperty(userIdToSearch)
+      ? lastUserAdded[userIdToSearch]
+      : null;
 
-    console.log(userDataValues);
-    return res.status(201).json(userDataValues);
+    if (!userFound) {
+      return res.status(404).json({ msg: "المستخدم غير موجود في البيانات" });
+    }
+    return res.status(201).json(userFound);
   } catch (error) {
     console.log(error);
     return res.status(500).json({ msg: "حدث خطأ أثناء جلب البيانات" });
   }
 };
+
 module.exports = {
   Login,
   getData,
