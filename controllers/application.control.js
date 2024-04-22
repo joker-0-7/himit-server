@@ -166,7 +166,7 @@ const addCumulative = async (req, res) => {
     const userFound = lastUserAdded.hasOwnProperty(userIdToSearch)
       ? lastUserAdded[userIdToSearch]
       : null;
-
+    console.log(userFound)
     if (!userFound) {
       return res.status(404).json({ msg: "المستخدم غير موجود في البيانات" });
     }
